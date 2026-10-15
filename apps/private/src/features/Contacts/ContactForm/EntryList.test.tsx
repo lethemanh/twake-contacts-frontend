@@ -61,127 +61,73 @@ describe('EntryList', () => {
     expect(gridItems[3]).toHaveClass('MuiGrid-grid-xs-1')
   })
 
-  it('renders mobile full grid for a single entry with type selector', () => {
-    mockUseBreakpoints.mockReturnValue({
-      isMobile: true,
-      isTablet: false,
-      isDesktop: false,
-      isExtraLarge: false
-    })
+  it.each([
+    {
+      name: 'a single entry with type selector',
+      entries: [{ type: 'home', value: '123' }],
+      showTypeSelector: true,
+      sizes: [8, 4]
+    },
+    {
+      name: 'a single entry without type selector',
+      entries: [{ type: '', value: 'alice@example.com' }],
+      showTypeSelector: false,
+      sizes: [12]
+    },
+    {
+      name: 'multiple entries with type selector',
+      entries: [
+        { type: 'home', value: '123' },
+        { type: 'work', value: '456' }
+      ],
+      showTypeSelector: true,
+      sizes: [6, 4, 2]
+    },
+    {
+      name: 'multiple entries without type selector',
+      entries: [
+        { type: '', value: 'alice@example.com' },
+        { type: '', value: 'bob@example.com' }
+      ],
+      showTypeSelector: false,
+      sizes: [10, 2]
+    }
+  ])(
+    'renders mobile full grid for $name',
+    ({ entries, showTypeSelector, sizes }) => {
+      mockUseBreakpoints.mockReturnValue({
+        isMobile: true,
+        isTablet: false,
+        isDesktop: false,
+        isExtraLarge: false
+      })
 
-    const { container } = renderWithProviders(
-      <EntryList
-        icon={Phone}
-        entries={[{ type: 'home', value: '123' }]}
-        types={['home', 'work']}
-        label="Phone"
-        onChange={jest.fn()}
-        onRemove={jest.fn()}
-        showTypeSelector={true}
-      />
-    )
+      const { container } = renderWithProviders(
+        <EntryList
+          icon={Phone}
+          entries={entries}
+          types={showTypeSelector ? ['home', 'work'] : []}
+          label={showTypeSelector ? 'Phone' : 'Email'}
+          onChange={jest.fn()}
+          onRemove={jest.fn()}
+          showTypeSelector={showTypeSelector}
+        />
+      )
 
-    const gridItems = container.querySelectorAll('.MuiGrid-root')
-    expect(gridItems[1]).toHaveClass('MuiGrid-grid-xs-8')
-    expect(gridItems[2]).toHaveClass('MuiGrid-grid-xs-4')
-    expect(gridItems).toHaveLength(3)
-  })
-
-  it('renders mobile full grid for a single entry without type selector', () => {
-    mockUseBreakpoints.mockReturnValue({
-      isMobile: true,
-      isTablet: false,
-      isDesktop: false,
-      isExtraLarge: false
-    })
-
-    const { container } = renderWithProviders(
-      <EntryList
-        icon={Phone}
-        entries={[{ type: '', value: 'alice@example.com' }]}
-        types={[]}
-        label="Email"
-        onChange={jest.fn()}
-        onRemove={jest.fn()}
-        showTypeSelector={false}
-      />
-    )
-
-    const gridItems = container.querySelectorAll('.MuiGrid-root')
-    expect(gridItems[1]).toHaveClass('MuiGrid-grid-xs-12')
-    expect(gridItems).toHaveLength(2)
-  })
-
-  it('renders mobile full grid for multiple entries with type selector', () => {
-    mockUseBreakpoints.mockReturnValue({
-      isMobile: true,
-      isTablet: false,
-      isDesktop: false,
-      isExtraLarge: false
-    })
-
-    const { container } = renderWithProviders(
-      <EntryList
-        icon={Phone}
-        entries={[
-          { type: 'home', value: '123' },
-          { type: 'work', value: '456' }
-        ]}
-        types={['home', 'work']}
-        label="Phone"
-        onChange={jest.fn()}
-        onRemove={jest.fn()}
-        showTypeSelector={true}
-      />
-    )
-
-    const rows = container.querySelectorAll('.MuiGrid-container')
-    expect(rows).toHaveLength(2)
-
-    const row1Items = rows[0].querySelectorAll(':scope > .MuiGrid-root')
-    expect(row1Items[0]).toHaveClass('MuiGrid-grid-xs-6')
-    expect(row1Items[1]).toHaveClass('MuiGrid-grid-xs-4')
-    expect(row1Items[2]).toHaveClass('MuiGrid-grid-xs-2')
-
-    const row2Items = rows[1].querySelectorAll(':scope > .MuiGrid-root')
-    expect(row2Items[0]).toHaveClass('MuiGrid-grid-xs-6')
-    expect(row2Items[1]).toHaveClass('MuiGrid-grid-xs-4')
-    expect(row2Items[2]).toHaveClass('MuiGrid-grid-xs-2')
-    expect(screen.getByRole('button', { name: 'Remove' })).toBeInTheDocument()
-  })
-
-  it('renders mobile full grid for multiple entries without type selector', () => {
-    mockUseBreakpoints.mockReturnValue({
-      isMobile: true,
-      isTablet: false,
-      isDesktop: false,
-      isExtraLarge: false
-    })
-
-    const { container } = renderWithProviders(
-      <EntryList
-        icon={Phone}
-        entries={[
-          { type: '', value: 'alice@example.com' },
-          { type: '', value: 'bob@example.com' }
-        ]}
-        types={[]}
-        label="Email"
-        onChange={jest.fn()}
-        onRemove={jest.fn()}
-        showTypeSelector={false}
-      />
-    )
-
-    const rows = container.querySelectorAll('.MuiGrid-container')
-    expect(rows).toHaveLength(2)
-
-    const row1Items = rows[0].querySelectorAll(':scope > .MuiGrid-root')
-    expect(row1Items[0]).toHaveClass('MuiGrid-grid-xs-10')
-    expect(row1Items[1]).toHaveClass('MuiGrid-grid-xs-2')
-
-    const row2Items = rows[1].querySelectorAll(':scope > .MuiGrid-root')
-    expect(row2Items[0]).toHaveClass('MuiGrid-grid-xs-10')
-    expect(row2Items[1]).toHaveClass('MuiGrid-grid-xs-2')
-  })
+      const rows = container.querySelectorAll('.MuiGrid-container')
+      expect(rows).toHaveLength(entries.length)
+      rows.forEach(row => {
+        const items = row.querySelectorAll(':scope > .MuiGrid-root')
+        expect(items).toHaveLength(sizes.length)
+        sizes.forEach((size, index) => {
+          expect(items[index]).toHaveClass(`MuiGrid-grid-xs-${size}`)
+        })
+      })
+      if (entries.length > 1 && showTypeSelector) {
+        expect(
+          screen.getByRole('button', { name: 'Remove' })
+        ).toBeInTheDocument()
+      }
+    }
+  )
 })

@@ -35,10 +35,10 @@ export const ContactFormSkeleton: React.FC = () => {
 
       <Stack spacing={3} className={isMobile ? 'u-w-100' : 'u-maw-7'}>
         <Grid container spacing={2}>
-          <Grid size={4}>
+          <Grid size={isMobile ? 12 : 4}>
             <Skeleton variant="rounded" height={56} />
           </Grid>
-          <Grid size={4}>
+          <Grid size={isMobile ? 12 : 4}>
             <Skeleton variant="rounded" height={56} />
           </Grid>
         </Grid>
