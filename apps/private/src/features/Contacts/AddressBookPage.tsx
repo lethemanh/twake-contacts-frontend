@@ -15,7 +15,8 @@ import {
   Stack,
   Tab,
   Tabs,
-  Typography
+  Typography,
+  useBreakpoints
 } from '@linagora/twake-mui'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
@@ -26,6 +27,7 @@ import { ImportContactsButton } from './ImportContactsButton'
 
 export const AddressBookPage: React.FC = () => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const { addressBookId } = useParams()
   const openpaasId = useAppSelector(state => state.user.userData.openpaasId)
@@ -128,7 +130,7 @@ export const AddressBookPage: React.FC = () => {
           <Skeleton variant="text" width={200} height={40} />
         ) : (
           <Stack direction="row" className="u-flex-items-center" spacing={2}>
-            <Typography variant="h4">{title}</Typography>
+            {!isMobile && <Typography variant="h4">{title}</Typography>}
             {!addressBookId && (
               <Tabs
                 value={selectedTab}
