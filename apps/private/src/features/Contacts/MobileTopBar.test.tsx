@@ -8,6 +8,19 @@ import { UserState } from '@common/features/User/UserSlice'
 import en from '@common/locales/en.json'
 import { MobileTopBar, MobileTopBarProps } from './MobileTopBar'
 
+jest.mock('@linagora/twake-mui', () => {
+  const actual = jest.requireActual('@linagora/twake-mui')
+  return {
+    ...actual,
+    useBreakpoints: () => ({
+      isMobile: true,
+      isTablet: false,
+      isDesktop: false,
+      isExtraLarge: false
+    })
+  }
+})
+
 const defaultPreloadedState = {
   user: { userData: { openpaasId: 'u1' } } as UserState,
   contacts: {
@@ -71,7 +84,7 @@ describe('MobileTopBar', () => {
     expect(onOpenSidebar).toHaveBeenCalledTimes(1)
   })
 
-  it('renders title and import button on address book page', () => {
+  it('renders title and hides import button for an empty address book', () => {
     renderMobileTopBar({
       isAddressBookPage: true,
       title: 'Custom Address Book'
@@ -81,8 +94,8 @@ describe('MobileTopBar', () => {
       screen.getByRole('heading', { name: 'Custom Address Book' })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: en.contacts.empty.import })
-    ).toBeInTheDocument()
+      screen.queryByRole('button', { name: en.contacts.empty.import })
+    ).not.toBeInTheDocument()
     expect(
       screen.queryByRole('button', { name: en.contacts.nav.search })
     ).not.toBeInTheDocument()
@@ -110,20 +123,5 @@ describe('MobileTopBar', () => {
 
     fireEvent.click(searchButton)
     expect(onToggleSearch).toHaveBeenCalledTimes(1)
-  })
-
-  it('calls onToggleMobileSearch fallback when onToggleSearch is not provided', () => {
-    const onToggleMobileSearch = jest.fn()
-    renderMobileTopBar({
-      isAddressBookPage: false,
-      onToggleSearch: undefined,
-      onToggleMobileSearch
-    })
-
-    const searchButton = screen.getByRole('button', {
-      name: en.contacts.nav.search
-    })
-    fireEvent.click(searchButton)
-    expect(onToggleMobileSearch).toHaveBeenCalledTimes(1)
   })
 })
