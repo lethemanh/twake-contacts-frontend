@@ -105,7 +105,12 @@
       "viewer": "Người xem",
       "contactsCount": "%{count} liên hệ",
       "you": "Bạn",
-      "defaultAddressBookName": "Sổ địa chỉ"
+      "defaultAddressBookName": "Sổ địa chỉ",
+      "discovery": {
+        "title": "Khám phá",
+        "description": "Cho phép người khác tìm và thêm sổ địa chỉ này qua tìm kiếm.",
+        "toggleTooltip": "Bật/tắt chế độ khám phá công khai"
+      }
     }
   },
   "error": {

@@ -15,14 +15,17 @@ export const fetchAddressBookDetailThunk = (
   create: ReducerCreators<ContactsState>
 ) =>
   create.asyncThunk<
-    { addressBookId: string; members: userData[] },
+    { addressBookId: string; members: userData[]; isPublic: boolean },
     FetchAddressBookDetailPayload,
     { rejectValue: RejectedError }
   >(
     async ({ userId, addressBookId }, { rejectWithValue }) => {
       try {
-        const members = await fetchAddressBookDetails(userId, addressBookId)
-        return { addressBookId, members }
+        const { members, isPublic } = await fetchAddressBookDetails(
+          userId,
+          addressBookId
+        )
+        return { addressBookId, members, isPublic }
       } catch (err) {
         return rejectWithValue(toRejectedError(err))
       }
@@ -38,11 +41,12 @@ export const fetchAddressBookDetailThunk = (
         if (!action.meta.arg.silent) {
           state.detailsLoading = false
         }
-        const { addressBookId, members } = action.payload
+        const { addressBookId, members, isPublic } = action.payload
         if (state.addressBooks[addressBookId]) {
           state.addressBooks[addressBookId] = {
             ...state.addressBooks[addressBookId],
-            invitedMembers: members
+            invitedMembers: members,
+            isPublic
           }
         }
       },

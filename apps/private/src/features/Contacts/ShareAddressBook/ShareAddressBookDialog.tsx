@@ -20,6 +20,7 @@ import { buildFullShareesList } from '@common/features/Contacts/transformer/Cont
 import { AddressBookInfoCard } from './AddressBookInfoCard'
 import { InviteSection } from './InviteSection'
 import { MembersList } from './MembersList'
+import { DiscoverySection } from './DiscoverySection'
 
 interface ShareAddressBookDialogProps {
   addressBookId: string
@@ -351,6 +352,10 @@ export const ShareAddressBookDialog: React.FC<ShareAddressBookDialogProps> = ({
           invitedMembers={activeInvitedMembers}
           onUpdateMember={(user, role) => void handleUpdateMember(user, role)}
           updatingMemberId={updatingMemberId}
+        />
+        <DiscoverySection
+          userId={userData.openpaasId}
+          addressBookId={book?.id}
         />
       </DialogContent>
     </Dialog>

@@ -105,7 +105,12 @@
       "viewer": "Читатель",
       "contactsCount": "%{count} контактов",
       "you": "Вы",
-      "defaultAddressBookName": "Адресная книга"
+      "defaultAddressBookName": "Адресная книга",
+      "discovery": {
+        "title": "Обнаруживаемость",
+        "description": "Позвольте другим находить и добавлять эту адресную книгу через поиск.",
+        "toggleTooltip": "Включить/выключить общедоступное обнаружение"
+      }
     }
   },
   "error": {

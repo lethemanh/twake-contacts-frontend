@@ -105,7 +105,12 @@
       "viewer": "Lector",
       "contactsCount": "%{count} contactos",
       "you": "Tú",
-      "defaultAddressBookName": "Libreta de direcciones"
+      "defaultAddressBookName": "Libreta de direcciones",
+      "discovery": {
+        "title": "Descubribilidad",
+        "description": "Permite que otros encuentren y añadan esta libreta de direcciones mediante la búsqueda.",
+        "toggleTooltip": "Activar/desactivar el descubrimiento público"
+      }
     }
   },
   "error": {

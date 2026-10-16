@@ -105,7 +105,12 @@
       "viewer": "Betrachter",
       "contactsCount": "%{count} Kontakte",
       "you": "Du",
-      "defaultAddressBookName": "Adressbuch"
+      "defaultAddressBookName": "Adressbuch",
+      "discovery": {
+        "title": "Auffindbarkeit",
+        "description": "Anderen erlauben, dieses Adressbuch über die Suche zu finden und hinzuzufügen.",
+        "toggleTooltip": "Auffindbarkeit aktivieren/deaktivieren"
+      }
     }
   },
   "error": {

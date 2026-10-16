@@ -105,7 +105,12 @@
       "viewer": "Viewer",
       "contactsCount": "%{count} contacts",
       "you": "You",
-      "defaultAddressBookName": "Address book"
+      "defaultAddressBookName": "Address book",
+      "discovery": {
+        "title": "Discovery",
+        "description": "Allow others to find and add this address book through search.",
+        "toggleTooltip": "Toggle public discovery"
+      }
     }
   },
   "error": {

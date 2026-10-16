@@ -105,7 +105,12 @@
       "viewer": "Spettatore",
       "contactsCount": "%{count} contatti",
       "you": "Tu",
-      "defaultAddressBookName": "Rubrica"
+      "defaultAddressBookName": "Rubrica",
+      "discovery": {
+        "title": "Scopribilità",
+        "description": "Consenti ad altri di trovare e aggiungere questa rubrica tramite la ricerca.",
+        "toggleTooltip": "Attiva/disattiva la scoperta pubblica"
+      }
     }
   },
   "error": {

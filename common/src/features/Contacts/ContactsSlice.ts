@@ -11,7 +11,8 @@ import {
   updateContactThunk,
   createAddressBookThunk,
   fetchAddressBookDetailThunk,
-  updateAddressBookSharesThunk
+  updateAddressBookSharesThunk,
+  publishAddressBookThunk
 } from './services'
 import { fetchUpdatedContactsThunk } from './services/fetchUpdatedContactsAsync'
 
@@ -53,7 +54,8 @@ const ContactsSlice = createAppSlice({
     deleteContact: deleteContactThunk(create),
     createAddressBook: createAddressBookThunk(create),
     fetchAddressBookDetail: fetchAddressBookDetailThunk(create),
-    updateAddressBookShares: updateAddressBookSharesThunk(create)
+    updateAddressBookShares: updateAddressBookSharesThunk(create),
+    publishAddressBook: publishAddressBookThunk(create)
   })
 })
 
@@ -70,6 +72,7 @@ export const {
   updateContact,
   createAddressBook,
   fetchAddressBookDetail,
-  updateAddressBookShares
+  updateAddressBookShares,
+  publishAddressBook
 } = ContactsSlice.actions
 export default ContactsSlice.reducer
