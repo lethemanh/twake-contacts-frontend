@@ -2,10 +2,12 @@ import {
   ActionsMenu,
   ActionsMenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  useBreakpoints
 } from '@linagora/twake-mui'
 import {
   Icon,
+  Pen,
   Trash,
   EmailOpen,
   CalendarToday,
@@ -22,6 +24,7 @@ interface ContactRowDropdownMenuProps {
   contact: Contact
   anchorEl: null | HTMLElement
   onClose: () => void
+  onEdit?: () => void
   onOpenDeleteDialog: () => void
   readOnly?: boolean
 }
@@ -39,10 +42,12 @@ export const ContactRowDropdownMenu: React.FC<ContactRowDropdownMenuProps> = ({
   contact,
   anchorEl,
   onClose,
+  onEdit,
   onOpenDeleteDialog,
   readOnly
 }) => {
   const { t } = useI18n()
+  const { isMobile } = useBreakpoints()
   const isMenuOpen = Boolean(anchorEl)
 
   const workplaceFqdn = useAppSelector(
@@ -82,6 +87,14 @@ export const ContactRowDropdownMenu: React.FC<ContactRowDropdownMenuProps> = ({
       onClose={onClose}
       onClick={e => e.stopPropagation()}
     >
+      {isMobile && !readOnly && onEdit && (
+        <ActionsMenuItem onClick={onEdit}>
+          <ListItemIcon>
+            <Icon icon={Pen} />
+          </ListItemIcon>
+          <ListItemText>{t('contacts.menu.edit')}</ListItemText>
+        </ActionsMenuItem>
+      )}
       <ActionsMenuItem onClick={handleSendMail} disabled={!firstEmail}>
         <ListItemIcon>
           <Icon icon={EmailOpen} />
